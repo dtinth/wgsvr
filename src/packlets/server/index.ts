@@ -8,6 +8,7 @@ import {
   formatClientConfig,
   formatServerPeerConfig,
   generatePeer,
+  getServerPublicKey,
   validatePeerIP,
 } from "../wireguard/index.ts";
 
@@ -73,6 +74,25 @@ export const app = new Elysia({ adapter: node() })
           const stats = await execa("wg show wg0", { shell: true });
           return stats.stdout;
         })
+        .get(
+          "/serverInfo",
+          async () => {
+            const publicKey = getServerPublicKey();
+            const endpoint = `${CONFIG.PUBLIC_HOST}:${CONFIG.WG_PORT}`;
+            return {
+              publicKey,
+              endpoint,
+            };
+          },
+          {
+            response: {
+              200: t.Object({
+                publicKey: t.String(),
+                endpoint: t.String(),
+              }),
+            },
+          }
+        )
         .get(
           "/generatePeerConfig",
           async ({ query }) => {
