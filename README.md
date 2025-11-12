@@ -46,7 +46,7 @@ Create `docker-compose.yml`:
 ```yaml
 services:
   wireguard:
-    image: wgsv
+    image: ghcr.io/wgsvr:latest
     restart: unless-stopped
     environment:
       - TZ=Asia/Bangkok
@@ -84,7 +84,7 @@ networks:
 ### Build & Run
 
 ```bash
-docker build -t wgsv .
+docker build -t wgsvr .
 docker compose up -d
 ```
 
