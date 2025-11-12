@@ -1,7 +1,6 @@
 import { defineCommand, runMain } from "citty";
 import { consola } from "consola";
 
-import { peerCommand } from "./commands/peer.ts";
 import { serverCommand } from "./commands/server.ts";
 
 export const main = defineCommand({
@@ -11,7 +10,6 @@ export const main = defineCommand({
     version: "1.0.0",
   },
   subCommands: {
-    peer: peerCommand,
     server: serverCommand,
   },
 });
