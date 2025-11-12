@@ -46,13 +46,13 @@ Create `docker-compose.yml`:
 ```yaml
 services:
   wireguard:
-    image: ghcr.io/wgsvr:latest
+    image: ghcr.io/wgsvr:main
     restart: unless-stopped
     environment:
       - TZ=Asia/Bangkok
-      - API_KEY=${API_KEY}
-      - PUBLIC_HOST=${PUBLIC_HOST}
-      - ALLOWED_TARGET_SUBNET=${ALLOWED_TARGET_SUBNET:-10.100.0.0/24}
+      - API_KEY=${API_KEY:?"Please set the API_KEY environment variable"}
+      - PUBLIC_HOST=${PUBLIC_HOST:?"Please set the PUBLIC_HOST environment variable"}
+      - ALLOWED_TARGET_SUBNET
     volumes:
       - etc_wireguard:/etc/wireguard
       - /lib/modules:/lib/modules:ro
