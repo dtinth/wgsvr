@@ -65,8 +65,9 @@ function initializeWireGuardConfig() {
 
   // Create default wg0.conf
   const privateKey = readFileSync(privateKeyPath, "utf8").trim();
+  const subnetMask = CONFIG.WG_SUBNET.split('/')[1];
   const defaultConfig = `[Interface]
-Address = ${CONFIG.WG_SERVER_IP}/17
+Address = ${CONFIG.WG_SERVER_IP}/${subnetMask}
 ListenPort = ${CONFIG.WG_PORT}
 PrivateKey = ${privateKey}
 `;
