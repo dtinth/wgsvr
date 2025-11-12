@@ -1,0 +1,27 @@
+{
+  "name": "wgsvr",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "pnpm node src/cli.ts server",
+    "node": "node --experimental-transform-types"
+  },
+  "keywords": [],
+  "author": "",
+  "packageManager": "pnpm@10.18.2",
+  "type": "module",
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.1",
+    "@types/node": "~24.10.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@elysiajs/node": "^1.4.2",
+    "citty": "^0.1.6",
+    "consola": "^3.4.2",
+    "elysia": "^1.4.15",
+    "execa": "^9.6.0",
+    "ip-range-check": "^0.2.0",
+    "ofetch": "^1.5.1"
+  }
+}
