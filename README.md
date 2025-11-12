@@ -17,7 +17,7 @@ You have a backend server you want to restrict access to. Instead of opening por
   - Only tested with Debian as a Docker host
   - Requires kernel with WireGuard support
 - **Docker runtime** with capability to run privileged containers
-- **Environment**: `API_KEY` and `PUBLIC_HOST` variables
+- **Environment**: `API_KEY` and `PUBLIC_HOST` variables (required), `ALLOWED_TARGET_SUBNET` (optional)
 
 ## Deployment
 
@@ -33,6 +33,10 @@ API_KEY=
 
 # IP or hostname that can reach the server
 PUBLIC_HOST=
+
+# (Optional) Subnet that WireGuard clients can access
+# Default: 10.100.0.0/24
+ALLOWED_TARGET_SUBNET=10.100.0.0/24
 ```
 
 ### Docker Compose
@@ -48,6 +52,7 @@ services:
       - TZ=Asia/Bangkok
       - API_KEY=${API_KEY}
       - PUBLIC_HOST=${PUBLIC_HOST}
+      - ALLOWED_TARGET_SUBNET=${ALLOWED_TARGET_SUBNET:-10.100.0.0/24}
     volumes:
       - etc_wireguard:/etc/wireguard
       - /lib/modules:/lib/modules:ro
@@ -144,7 +149,8 @@ Shows WireGuard interface statistics including transferred bytes per peer.
   - Each peer assigned a `/32` address (e.g., `10.100.128.10`)
   - Example: `alice` might be `10.100.128.10`
 
-- **Backend services**: `10.100.0.0/24` subnet
+- **Backend services**: Configurable subnet (default `10.100.0.0/24`)
+  - Controlled by `ALLOWED_TARGET_SUBNET` environment variable
   - Clients can reach anything on this subnet
   - Cannot reach anything outside this range
   - Cannot reach each other
@@ -163,7 +169,7 @@ Shows WireGuard interface statistics including transferred bytes per peer.
 ## Security
 
 - **Peer isolation**: Clients cannot communicate with each other (firewall rules block peer-to-peer traffic)
-- **Network restriction**: Clients can only access services on `10.100.0.0/24`
+- **Network restriction**: Clients can only access services on the configured subnet (default `10.100.0.0/24`, customizable via `ALLOWED_TARGET_SUBNET`)
 - **API authentication**: All management API calls require `x-api-key` header
 - **Key persistence**: Server keypair persists across restarts via volume mount
 

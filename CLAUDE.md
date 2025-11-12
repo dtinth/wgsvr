@@ -163,6 +163,7 @@ src/
 
 - `PUBLIC_HOST` - Public VPN endpoint hostname (fallback: `vpn.example.com`)
 - `API_KEY` - Required for API authentication; should be set before starting server
+- `ALLOWED_TARGET_SUBNET` - Subnet that WireGuard clients can access (fallback: `10.100.0.0/24`)
 
 ### Configuration Constants (src/packlets/config/index.ts)
 
@@ -172,7 +173,7 @@ src/
 - `WG_PORT` - 51820
 - `WG_SUBNET` - `10.100.128.0/17`
 - `WG_SERVER_IP` - `10.100.128.1`
-- `ALLOWED_TARGET_SUBNET` - `10.100.0.0/24`
+- `ALLOWED_TARGET_SUBNET` - From env or `10.100.0.0/24`
 - `PUBLIC_HOST` - From env or `vpn.example.com`
 
 ## Important Implementation Details
